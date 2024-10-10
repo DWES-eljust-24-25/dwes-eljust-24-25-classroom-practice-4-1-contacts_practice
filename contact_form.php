@@ -28,7 +28,7 @@ $contacts = require_once __DIR__.'/data.php';
                         <label for="id" class="col-form-label">ID</label>
                     </div>
                     <div class="col-auto">
-                        <input type="text" id="id" class="form-control">
+                        <input type="text" id="id" class="form-control" readonly>
                     </div>
                 </div>
 
@@ -68,7 +68,7 @@ $contacts = require_once __DIR__.'/data.php';
                         <label for="birth" class="col-form-label">Birth date</label>
                     </div>
                     <div class="col-auto">
-                        <input type="text" id="birth" name="birth" class="form-control">
+                        <input type="date" id="birth" name="birth" class="form-control">
                     </div>
                 </div>
                 <div class="row g-3 align-items-center mb-3">

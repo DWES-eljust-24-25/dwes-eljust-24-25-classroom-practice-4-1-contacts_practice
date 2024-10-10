@@ -4,6 +4,8 @@
 function showTable(array $data, ?array $header = null)
 {
 
+
+    //Encabezado
     //Saco los encabezados a un array
     if ($header === null) {
         $encabezado = array_keys($data[0]);
@@ -11,31 +13,41 @@ function showTable(array $data, ?array $header = null)
         $encabezado = array_keys($header[0]);
     }
 
-    echo "<table border='1'>";
+    echo "<table>";
 
     //Encabezado
-    echo "<thead><tr>";
+    echo "<thead><tr><th  class='p-2 bg-warning border-3'></th>";
+
+    //Celda en blanco
+    echo "<th  class='p-2 bg-warning border-3'></th>";
 
     //Creo las celdas de los encabezados
-    foreach ($encabezado as $item) {
-        echo "<th style='padding: 5px;'>$item </th>";
+    foreach ($encabezado as $key) {
+        // filtro los encabezados no necesarios
+        if ($key !== "birthdate"  && $key !== "phone"  && $key !== "email"  && $key !== "favourite"  && $key != "important" && $key !== "archived") {
+            echo "<th class='p-2 bg-warning border-3 text-center'>". strtoupper($key)."</th>";
+        }
     }
 
     echo "</tr></thead>";
 
-    //Cuerpo de la tabla
+    //Cuerpo
     echo "<tbody>";
 
     //Muestro los datos
     foreach ($data as $fila) {
         echo "<tr>";
+
+        //Botón editar
+        echo "<td class='p-2 border-2'>";
+        echo "<button class='m-2 border-1'>Edit/Wiew</button>";
+        echo "</td>";
+
         foreach ($fila as $key => $element) {
 
-            //Centro los numéricos
-            if (is_numeric($element)) {
-                echo "<td style='text-align: center;padding: 5px;'>$element</td>";
-            } else {
-                echo "<td style='padding: 5px;'>$element</td>";
+            //Muestro los datos segun el encabezado permitido
+            if ($key !== "birthdate"  && $key !== "phone"  && $key !== "email"  && $key !== "favourite"  && $key != "important" && $key !== "archived") {
+                echo "<td class='p-2 border-2'>$element</td>";
             }
         }
         echo "</tr>";
@@ -45,4 +57,4 @@ function showTable(array $data, ?array $header = null)
 
     echo "</table>";
 }
-//In this script, place the functions
+
