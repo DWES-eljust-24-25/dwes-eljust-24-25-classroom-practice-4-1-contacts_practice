@@ -21,7 +21,7 @@ $contacts = require_once __DIR__.'/data.php';
         <div class="col">
             <h1 class="text-center">Contact</h1>
 
-            <form class="border border-2 p-3" action="">
+            <form class="border border-2 p-3" action="checkdata.php" method="get">
 
                 <div class="row g-3 align-items-center mb-3" >
                     <div class="col-auto">

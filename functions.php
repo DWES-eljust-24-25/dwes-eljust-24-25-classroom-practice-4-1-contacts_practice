@@ -16,7 +16,7 @@ function showTable(array $data, ?array $header = null)
     echo "<table>";
 
     //Encabezado
-    echo "<thead><tr><th  class='p-2 bg-warning border-3'></th>";
+    echo "<thead><tr>";
 
     //Celda en blanco
     echo "<th  class='p-2 bg-warning border-3'></th>";
@@ -24,7 +24,7 @@ function showTable(array $data, ?array $header = null)
     //Creo las celdas de los encabezados
     foreach ($encabezado as $key) {
         // filtro los encabezados no necesarios
-        if ($key !== "birthdate"  && $key !== "phone"  && $key !== "email"  && $key !== "favourite"  && $key != "important" && $key !== "archived") {
+        if ($key == "id" || $key == "title" || $key == "name" || $key == "surname") {
             echo "<th class='p-2 bg-warning border-3 text-center'>". strtoupper($key)."</th>";
         }
     }
@@ -46,7 +46,7 @@ function showTable(array $data, ?array $header = null)
         foreach ($fila as $key => $element) {
 
             //Muestro los datos segun el encabezado permitido
-            if ($key !== "birthdate"  && $key !== "phone"  && $key !== "email"  && $key !== "favourite"  && $key != "important" && $key !== "archived") {
+            if ($key == "id" || $key == "title" || $key == "name" || $key == "surname") {
                 echo "<td class='p-2 border-2'>$element</td>";
             }
         }
