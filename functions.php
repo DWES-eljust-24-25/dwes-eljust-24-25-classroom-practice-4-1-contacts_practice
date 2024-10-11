@@ -58,3 +58,32 @@ function showTable(array $data, ?array $header = null)
     echo "</table>";
 }
 
+function validateProvider(array $provider): array
+{
+
+    $errors = [];
+    if (empty($provider['name'])) {
+        $errors['name'] = "* Name is required";
+    }elseif (strlen($provider['name']) < 4) {
+        $errors['name'] = "* Name must be at least 4 characters long";
+    }
+
+
+    if (empty($provider['email'])) {
+        $errors['email'] = "* Email is required";
+    } elseif (!filter_var($provider['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = "* Invalid email format";
+    }
+
+    if(empty($provider['cif'])) {
+        $errors['cif'] = "* CIF is required";
+    } elseif (!preg_match("/ˆ[A-Z a-z]{1}[0-9]{8}$/", $provider['cif'])) {
+        $errors['cif'] = "* Invalid CIF format";
+    }
+
+
+    return $errors;
+}
+
+
+

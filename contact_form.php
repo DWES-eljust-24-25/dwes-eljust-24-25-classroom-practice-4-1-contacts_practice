@@ -1,34 +1,59 @@
 <?php
 //In this script do the self-validated form
 
-$contacts = require_once __DIR__.'/data.php';
+$contacts = require_once __DIR__ . '/data.php';
+require_once __DIR__ . "/functions.php";
 
+$provider = [];
+
+global $errors;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $provider['id'] = trim(strip_tags($_POST['id']));
+    $provider['title'] = trim(strip_tags($_POST['title']));
+    $provider['name'] = trim(strip_tags($_POST['name']));
+    $provider['surname'] = trim(strip_tags($_POST['surname']));
+    $provider['birthdate'] = trim(strip_tags($_POST['birthdate']));
+    $provider['phone'] = trim(strip_tags($_POST['phone']));
+    $provider['email'] = trim(strip_tags($_POST['email']));
+
+//    checkbox
+    (isset($_REQUEST['favourite'])) ? $provider['favourite'] = true : $provider['favourite'] = false;
+    (isset($_REQUEST['important'])) ? $provider['important'] = true : $provider['important'] = false;
+    (isset($_REQUEST['archived'])) ? $provider['archived'] = true : $provider['archived'] = false;
+
+    $errors = validateProvider($provider);
+}
+
+require_once __DIR__ . "/html/head.php";
 ?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contact form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
+
 <body>
 <div class="container mt-5">
 
+<?php
+foreach ($provider as $name => $value) {
+    echo "<p class='m-1'>$name: $value</p>";
+}
+
+?>
     <div class="row">
         <div class="col-2"></div>
         <div class="col">
             <h1 class="text-center">Contact</h1>
 
-            <form class="border border-2 p-3" action="checkdata.php" method="get">
+            <form class="border border-2 p-3" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+                  method="post">
+                <!--            <form class="border border-2 p-3" action="checkdata.php" method="get">-->
 
-                <div class="row g-3 align-items-center mb-3" >
+                <div class="row g-3 align-items-center mb-3">
                     <div class="col-auto">
                         <label for="id" class="col-form-label">ID</label>
                     </div>
                     <div class="col-auto">
-                        <input type="text" id="id" class="form-control" readonly>
+                        <input type="text" id="id" class="form-control" name="id" value="0" readonly>
                     </div>
                 </div>
 
@@ -53,22 +78,29 @@ $contacts = require_once __DIR__.'/data.php';
                         <label for="name" class="col-form-label">First name</label>
                     </div>
                     <div class="col-auto">
-                        <input type="text" id="name" name="name" class="form-control">
+                        <input type="text" id="name" name="name" class="form-control"
+                               value="<?= $provider['name'] ?? '' ?>">
                     </div>
+                    <div class="invalid-feedback">
+                        <span class="error" style="color: red"> <?= $errors['name'] ?? '' ?> </span> <br><br>
+                    </div>
+
                     <div class="col-auto">
                         <label for="surname" class="col-form-label">Surname</label>
                     </div>
                     <div class="col-auto">
-                        <input type="text" id="surname" name="surname" class="form-control"">
+                        <input type="text" id="surname" name="surname" class="form-control"
+                               value="<?= $provider['surname'] ?? '' ?>">
                     </div>
                 </div>
 
                 <div class="row g-3 align-items-center mb-3">
                     <div class="col-auto">
-                        <label for="birth" class="col-form-label">Birth date</label>
+                        <label for="birthdate" class="col-form-label">birthdate date</label>
                     </div>
                     <div class="col-auto">
-                        <input type="date" id="birth" name="birth" class="form-control">
+                        <input type="date" id="birthdate" name="birthdate" class="form-control"
+                               value="<?= $provider['birthdate'] ?? '' ?>">
                     </div>
                 </div>
                 <div class="row g-3 align-items-center mb-3">
@@ -76,48 +108,53 @@ $contacts = require_once __DIR__.'/data.php';
                         <label for="phone" class="col-form-label">Phone</label>
                     </div>
                     <div class="col-auto">
-                        <input type="password" id="phone" name="phone" class="form-control">
+                        <input type="text" id="phone" name="phone" class="form-control"
+                               value="<?= $provider['phone'] ?? '' ?>">
                     </div>
                 </div>
                 <div class="row g-3 align-items-center mb-3">
                     <div class="col-auto">
-                        <label for="pass" class="col-form-label">Password</label>
+                        <label for="email" class="col-form-label">Email</label>
                     </div>
                     <div class="col-auto">
-                        <input type="text" id="pass" name="pass" class="form-control">
+                        <input type="text" id="phone" name="email" class="form-control"
+                               value="<?= $provider['email'] ?? '' ?>">
                     </div>
                 </div>
 
                 <p>Type</p>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="favourite" id="check01">
+                    <input class="form-check-input" type="checkbox" name="favourite"
+                           id="check01" <?= $provider['favourite'] == true ? "checked" : '' ?>>
                     <label class="form-check-label" for="check01">
                         Favourite
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="important" id="check02">
+                    <input class="form-check-input" type="checkbox" name="important"
+                           id="check02" <?= $provider['important'] == true ? "checked" : '' ?>>
                     <label class="form-check-label" for="check02">
                         Important
                     </label>
                 </div>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" value="archived" id="check03">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="archived"
+                           id="check03" <?= $provider['archived'] ? "checked" : '' ?>>
                     <label class="form-check-label" for="check03">
                         Archived
                     </label>
                 </div>
 
-                <input type="submit" class="btn btn-secondary" value="Save">
-                <input type="submit" class="btn btn-secondary" value="Update" disabled>
-                <input type="submit" class="btn btn-secondary" value="Delete" disabled>
+                <div class="mt-3">
+                    <input type="submit" class="btn btn-secondary" value="Save">
+                    <input type="submit" class="btn btn-secondary" value="Update" disabled>
+                    <input type="submit" class="btn btn-secondary" value="Delete" disabled>
+                </div>
             </form>
         </div>
         <div class="col-2"></div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
+<?php require_once __DIR__ . "/html/footer.php"; ?>
 
