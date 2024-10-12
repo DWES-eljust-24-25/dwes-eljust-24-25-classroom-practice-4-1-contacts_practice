@@ -39,6 +39,12 @@ if (isset($_SESSION['provider'])) {
     echo "<p>No provider data</p>";
 }
 
+?>
+
+    <a class="btn btn-secondary" href="contact_form.php">Form return</a>
+    <a class="btn btn-secondary" href="contact_list.php">Data table</a>
+
+<?php
 require_once __DIR__ . "/html/footer.php";
-session_destroy();
+//session_destroy();
 

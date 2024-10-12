@@ -22,31 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     (isset($_REQUEST['important'])) ? $provider['important'] = true : $provider['important'] = false;
     (isset($_REQUEST['archived'])) ? $provider['archived'] = true : $provider['archived'] = false;
 
+    $_SESSION['provider'] = $provider;
+
     $errors = validateProvider($provider);
 
-}
+    if (empty($errors)) {
+        header("location: checkdata.php?");
+    }
 
-print_r($errors);
-echo '<br>' . gettype($provider['id']);
-echo '<br>' . gettype($provider['title']);
-echo '<br>' . gettype($provider['name']);
-echo '<br>' . gettype($provider['surname']);
-echo '<br>' . gettype($provider['birthdate']);
-echo '<br>' . gettype($provider['phone']);
-echo '<br>' . gettype($provider['email']);
-echo '<br>' . gettype($provider['favourite']);
-echo '<br>' . gettype($provider['important']);
-echo '<br>' . gettype($provider['archived']);
-
-$_SESSION['provider'] = $provider;
-$errors = validateProvider($provider);
-
-if (empty($errors)) {
-    header("location: checkdata.php?");
 }
 
 require_once __DIR__ . "/html/head.php";
-
 
 ?>
 
@@ -63,6 +49,6 @@ require_once __DIR__ . "/html/head.php";
 
 <?php
 require_once __DIR__ . "/html/footer.php";
-session_destroy();
+//session_destroy(); no destruir la sesion del que envía los datos
 ?>
 
