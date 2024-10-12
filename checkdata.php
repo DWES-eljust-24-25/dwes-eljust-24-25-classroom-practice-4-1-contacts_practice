@@ -1,12 +1,14 @@
 <?php
+
+//inicio sesión
 session_start();
 
-
-session_start();
-
+//importo cabecera
 require_once __DIR__ . "/html/head.php";
 
+//Compruebo si llegan datos desde el formulario y si es correcto los muestro
 if (isset($_SESSION['provider'])) {
+
     $provider = $_SESSION['provider'];
     echo "<p>id: " . $provider['id'] . "</p>";
     echo "<p>title: " . $provider['title'] . "</p>";
@@ -45,6 +47,7 @@ if (isset($_SESSION['provider'])) {
     <a class="btn btn-secondary" href="contact_list.php">Data table</a>
 
 <?php
+
+//Importo el footer
 require_once __DIR__ . "/html/footer.php";
-//session_destroy();
 

@@ -1,5 +1,6 @@
 
-
+<!--inicio del formulario-->
+<!--$_SERVER["PHP_SELF"]) hace que no cambie de página-->
 <form class="border border-2 p-3" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
 <!--    ID-->
@@ -8,7 +9,9 @@
             <label for="id" class="col-form-label">ID</label>
         </div>
         <div class="col-auto">
-            <input type="text" id="id" class="form-control" name="id" value="0" readonly>
+<!--            El código de value hace que se rellene si $provaider tiene un valor que corresponda al name-->
+<!--            todos los demas inputs del formulario tienen el mismo código adaptados a ellos-->
+            <input type="text" id="id" class="form-control" name="id" value="<?= $provider['id'] ?? '0' ?>" readonly>
         </div>
     </div>
 
@@ -40,6 +43,8 @@
         <div class="col-auto">
             <input type="text" id="name" name="name" class="form-control"
                    value="<?= $provider['name'] ?? '' ?>">
+<!--            Código que saldra solamente si están contenidos en $errors-->
+<!--            todos los demas inputs del formulario tienen el mismo código adaptados a ellos menos checkbox y radio-->
             <span style="color:red"> <?= $errors['name'] ?? '' ?> </span>
         </div>
 
@@ -95,27 +100,22 @@
     <div class="form-check">
         <input class="form-check-input" type="checkbox" name="favourite"
                id="check01" <?= $provider['favourite'] == true ? "checked" : '' ?>>
-        <label class="form-check-label" for="check01">
-            Favourite
-        </label>
+        <label class="form-check-label" for="check01">Favourite</label>
     </div>
     <div class="form-check">
         <input class="form-check-input" type="checkbox" name="important"
                id="check02" <?= $provider['important'] == true ? "checked" : '' ?>>
-        <label class="form-check-label" for="check02">
-            Important
-        </label>
+        <label class="form-check-label" for="check02">Important</label>
     </div>
     <div class="form-check">
         <input class="form-check-input" type="checkbox" name="archived"
                id="check03" <?= $provider['archived'] ? "checked" : '' ?>>
-        <label class="form-check-label" for="check03">
-            Archived
-        </label>
+        <label class="form-check-label" for="check03">Archived</label>
     </div>
 
 <!--    Buttons-->
     <div class="mt-3">
+<!--        Envia el formulario-->
         <input type="submit" class="btn btn-secondary" value="Save">
         <input type="submit" class="btn btn-secondary" value="Update" disabled>
         <input type="submit" class="btn btn-secondary" value="Delete" disabled>

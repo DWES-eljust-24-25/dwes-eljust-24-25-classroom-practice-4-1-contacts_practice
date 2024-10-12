@@ -1,57 +1,11 @@
 <?php
 
+//Obliga a tipar correctamente las funciones
 declare(strict_types=1);
 
-$data = require_once __DIR__ . '/data.php';
+//$data = require_once __DIR__ . '/data.php';
 
-function checkContactDate(string $cadena): bool
-{
-
-
-    //Separo usando - como caracter de separación y lo añado a a las variables qe se crean en la lista
-//    https://www.hashbangcode.com/article/using-list-explode-php
-    list($anyo, $mes, $day) = explode("-", $cadena);
-
-    // Convertimos los valores a enteros para las comparaciones
-    $anyo = intval($anyo);
-    $mes = intval($mes);
-    $day = intval($day);
-
-    //Para comprobar febrero.
-    $february = ((($anyo % 4) == 0) && ((($anyo % 100) != 0) || (($anyo % 400) == 0)));
-
-    // Valido el año
-    if ($anyo < 1000 || $anyo > 3000) {
-        return false; // falso si no es correcto
-    }
-
-    // Valido el mes
-    if ($mes < 1 || $mes > 12) {
-        return false; // falso si no es correcto
-    }
-
-    // Valido el día según el mes
-
-    //Array con los días de cada mes por orden
-    $daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-    //Si el mes es febrero
-    if ($mes == 2) {
-        //Comprueba si un año es bisiesto. Si es bisiesto cambia el 28 por el 29
-        //El 1 marca la posición de febrero de $daysInMonth
-        $daysInMonth[1] = $february ? 29 : 28;
-    }
-
-    //Comprueba el día segun el mes recorriendo el array de días
-    //Le resta uno a $mes para coincidir con el array $daysInMonth
-    if ($day < 1 || $day > $daysInMonth[$mes - 1]) {
-        return false;
-    }
-
-    // Si todas las condiciones se cumplen, la fecha es válida
-    return true;
-}
-
+//Función para crear una tabla con uno o dos arrays
 function showTable(array $data, ?array $header = null)
 {
 
@@ -91,7 +45,23 @@ function showTable(array $data, ?array $header = null)
 
         //Botón editar
         echo "<td class='p-2 border-2'>";
-        echo "<button class='m-2 border-1'>Edit/Wiew</button>";
+
+//        Etiqueta a con href preparado para pasar los datos de un contacto selecionado mediante get
+        echo "<a href='contact_form.php?"
+
+            ."&id=" . $fila["id"]
+            ."&title=" . $fila["title"]
+            ."&name=" . $fila["name"]
+            ."&surname=" . $fila["surname"]
+            ."&birthdate=" . $fila["birthdate"]
+            ."&phone=" . $fila["phone"]
+            ."&email=" . $fila["email"]
+            ."&favourite=" . $fila["favourite"]
+            ."&important=" . $fila["important"]
+            ."&archived=" . $fila["archived"]
+
+            . "' class='m-2 border-1 btn btn-secondary'>Edit/Wiew</a>";
+
         echo "</td>";
 
         foreach ($fila as $key => $element) {
@@ -109,19 +79,21 @@ function showTable(array $data, ?array $header = null)
     echo "</table>";
 }
 
+//funcioón para comprobar los errores del formlario
 function validateProvider(array $provider): array
 {
 
+//    inicio una array que voy llenando segun los errores que encuentre
     $errors = [];
+
+//    si está vacío
     if (empty($provider['name'])) {
         $errors['name'] = "Name is required";
     }
 
-
     if (empty($provider['name'])) {
         $errors['name'] = "Name is required";
     }
-
 
     if (empty($provider['surname'])) {
         $errors['surname'] = "Surname is required";
@@ -133,17 +105,19 @@ function validateProvider(array $provider): array
 
     if (empty($provider['phone'])) {
         $errors['phone'] = "Phone is required";
+//        Con expresiión regular
     } elseif (!preg_match("/[0-9]{9}/", $provider['phone'])) {
         $errors['phone'] = "Invalid phone format";
     }
 
     if (empty($provider['email'])) {
         $errors['email'] = "Email is required";
+//        Con un filtro de PHP
     } elseif (!filter_var($provider['email'], FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = "Invalid email format";
     }
 
-
+//    Devuelvo el array vacío si no hay errores o con los mensajes si se encuentra alguno
     return $errors;
 }
 
