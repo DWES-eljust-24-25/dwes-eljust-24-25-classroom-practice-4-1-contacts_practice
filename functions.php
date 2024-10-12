@@ -113,29 +113,27 @@ function validateProvider(array $provider): array
     $errors = [];
     if (empty($provider['name'])) {
         $errors['name'] = "Name is required";
-    } elseif (strlen($provider['name']) < 4) {
-        $errors['name'] = "Name must be at least 4 characters long";
     }
 
 
     if (empty($provider['surname'])) {
         $errors['surname'] = "Surname is required";
-    } elseif (strlen($provider['name']) < 4) {
-        $errors['surname'] = "Surname must be at least 4 characters long";
     }
 
     if (empty($provider['birthdate'])) {
         $errors['birthdate'] = "Birthdate is required";
-    } elseif (checkContactDate($provider['birthdate'])) {
-        $errors['surname'] = "Surname must be at least 4 characters long";
     }
 
-    if (empty($provider['birthdate'])) {
-        $errors['birthdate'] = "Birthdate is required";
-    } elseif (!checkContactDate($provider['birthdate'])) {
-        $errors['birthdate'] = "Date wrong";
-    } elseif (preg_match("^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$", $provider['birthdate'])) {
-        $errors['birthdate'] = "Format not valid";
+    if (empty($provider['phone'])) {
+        $errors['phone'] = "Phone is required";
+    } elseif (!preg_match("/[0-9]{9}/", $provider['phone'])) {
+        $errors['phone'] = "Invalid phone format";
+    }
+
+    if (empty($provider['email'])) {
+        $errors['email'] = "Email is required";
+    } elseif (!filter_var($provider['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = "Invalid email format";
     }
 
 
