@@ -1,48 +1,55 @@
 <?php
-//In this script do the self-validated form
+session_start();
 
-$contacts = require_once __DIR__ . '/data.php';
 require_once __DIR__ . "/functions.php";
 
 $provider = [];
 
 $errors;
 
-//if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//
-//    $provider['id'] = trim(strip_tags($_POST['id']));
-//    $provider['title'] = trim(strip_tags($_POST['title']));
-//    $provider['name'] = trim(strip_tags($_POST['name']));
-//    $provider['surname'] = trim(strip_tags($_POST['surname']));
-//    $provider['birthdate'] = trim(strip_tags($_POST['birthdate']));
-//    $provider['phone'] = trim(strip_tags($_POST['phone']));
-//    $provider['email'] = trim(strip_tags($_POST['email']));
-//
-////    checkbox
-//    (isset($_REQUEST['favourite'])) ? $provider['favourite'] = true : $provider['favourite'] = false;
-//    (isset($_REQUEST['important'])) ? $provider['important'] = true : $provider['important'] = false;
-//    (isset($_REQUEST['archived'])) ? $provider['archived'] = true : $provider['archived'] = false;
-//
-//    $errors = validateProvider($provider);
-//}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-//$errors = validateProvider($provider);
-//
-//print_r($errors);
+    $provider['id'] = trim(strip_tags($_POST['id']));
+    $provider['title'] = trim(strip_tags($_POST['title']));
+    $provider['name'] = trim(strip_tags($_POST['name']));
+    $provider['surname'] = trim(strip_tags($_POST['surname']));
+    $provider['birthdate'] = trim(strip_tags($_POST['birthdate']));
+    $provider['phone'] = trim(strip_tags($_POST['phone']));
+    $provider['email'] = trim(strip_tags($_POST['email']));
 
-require_once __DIR__ . "/html/head.php";
-?>
+//    checkbox
+    (isset($_REQUEST['favourite'])) ? $provider['favourite'] = true : $provider['favourite'] = false;
+    (isset($_REQUEST['important'])) ? $provider['important'] = true : $provider['important'] = false;
+    (isset($_REQUEST['archived'])) ? $provider['archived'] = true : $provider['archived'] = false;
 
+    $errors = validateProvider($provider);
 
-<body>
-<div class="container mt-5">
-
-<?php
-foreach ($provider as $name => $value) {
-    echo "<p class='m-1'>$name: $value</p>";
 }
 
+print_r($errors);
+echo '<br>' . gettype($provider['id']);
+echo '<br>' . gettype($provider['title']);
+echo '<br>' . gettype($provider['name']);
+echo '<br>' . gettype($provider['surname']);
+echo '<br>' . gettype($provider['birthdate']);
+echo '<br>' . gettype($provider['phone']);
+echo '<br>' . gettype($provider['email']);
+echo '<br>' . gettype($provider['favourite']);
+echo '<br>' . gettype($provider['important']);
+echo '<br>' . gettype($provider['archived']);
+
+$_SESSION['provider'] = $provider;
+$errors = validateProvider($provider);
+
+if (empty($errors)) {
+    header("location: checkdata.php?");
+}
+
+require_once __DIR__ . "/html/head.php";
+
+
 ?>
+
     <div class="row">
         <div class="col-2"></div>
         <div class="col">
@@ -53,7 +60,9 @@ foreach ($provider as $name => $value) {
         </div>
         <div class="col-2"></div>
     </div>
-</div>
 
-<?php require_once __DIR__ . "/html/footer.php"; ?>
+<?php
+require_once __DIR__ . "/html/footer.php";
+session_destroy();
+?>
 

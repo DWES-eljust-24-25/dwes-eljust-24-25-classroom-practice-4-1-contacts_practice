@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+$data = require_once __DIR__ . '/data.php';
+
 function checkContactDate(string $cadena): bool
 {
 
@@ -108,9 +112,12 @@ function showTable(array $data, ?array $header = null)
 function validateProvider(array $provider): array
 {
 
-    $dateFormat= "^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$";
-
     $errors = [];
+    if (empty($provider['name'])) {
+        $errors['name'] = "Name is required";
+    }
+
+
     if (empty($provider['name'])) {
         $errors['name'] = "Name is required";
     }

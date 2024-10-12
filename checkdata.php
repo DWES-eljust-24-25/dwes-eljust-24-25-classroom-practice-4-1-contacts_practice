@@ -1,57 +1,44 @@
 <?php
-//In this script do the self-validated form
-
-$contacts = require_once __DIR__ . '/data.php';
-require_once __DIR__ . "/functions.php";
-
-$provider = [];
-
-$errors;
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $provider['id'] = trim(strip_tags($_POST['id']));
-    $provider['title'] = trim(strip_tags($_POST['title']));
-    $provider['name'] = trim(strip_tags($_POST['name']));
-    $provider['surname'] = trim(strip_tags($_POST['surname']));
-    $provider['birthdate'] = trim(strip_tags($_POST['birthdate']));
-    $provider['phone'] = trim(strip_tags($_POST['phone']));
-    $provider['email'] = trim(strip_tags($_POST['email']));
-
-//    checkbox
-    (isset($_REQUEST['favourite'])) ? $provider['favourite'] = true : $provider['favourite'] = false;
-    (isset($_REQUEST['important'])) ? $provider['important'] = true : $provider['important'] = false;
-    (isset($_REQUEST['archived'])) ? $provider['archived'] = true : $provider['archived'] = false;
-
-    $errors = validateProvider($provider);
-}
+session_start();
 
 
-print_r($errors);
+session_start();
 
 require_once __DIR__ . "/html/head.php";
-?>
 
+if (isset($_SESSION['provider'])) {
+    $provider = $_SESSION['provider'];
+    echo "<p>id: " . $provider['id'] . "</p>";
+    echo "<p>title: " . $provider['title'] . "</p>";
+    echo "<p>name: " . $provider['name'] . "</p>";
+    echo "<p>surname: " . $provider['surname'] . "</p>";
+    echo "<p>birthdate: " . $provider['birthdate'] . "</p>";
+    echo "<p>phone: " . $provider['phone'] . "</p>";
+    echo "<p>email: " . $provider['email'] . "</p>";
 
-<body>
-<div class="container mt-5">
-
-    <?php
-    foreach ($provider as $name => $value) {
-        echo "<p class='m-1'>$name: $value</p>";
+    if ($provider[favourite]){
+        echo "<p>favourite: " . $provider['favourite'] . "</p>";
+    }else{
+        echo "<p>favourite: " . $provider['favourite'] . "</p>";
     }
 
-    ?>
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col">
-            <h1 class="text-center">Contact</h1>
+    if ($provider[important]){
+        echo "<p>important: " . $provider['important'] . "</p>";
+    }else{
+        echo "<p>important: " . $provider['important'] . "</p>";
+    }
+
+    if ($provider[archived]){
+        echo "<p>archived: " . $provider['archived'] . "</p>";
+    }else{
+        echo "<p>archived: " . $provider['archived'] . "</p>";
+    }
 
 
+} else {
+    echo "<p>No provider data</p>";
+}
 
-        </div>
-        <div class="col-2"></div>
-    </div>
-</div>
+require_once __DIR__ . "/html/footer.php";
+session_destroy();
 
-<?php require_once __DIR__ . "/html/footer.php"; ?>

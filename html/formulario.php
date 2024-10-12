@@ -1,18 +1,6 @@
 
 
-<form class="border border-2 p-3" action="
-
-<?php
-
-if (count($errors) == 0){
-    echo htmlspecialchars('checkdata.php');
-//    echo htmlspecialchars($_SERVER['PHP_SELF']);
-}
-
-?>
-
-" method="post">
-    <!--            <form class="border border-2 p-3" action="checkdata.php" method="get">-->
+<form class="border border-2 p-3" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
 <!--    ID-->
     <div class="row g-3 align-items-center mb-3">
