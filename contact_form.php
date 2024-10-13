@@ -7,9 +7,15 @@ require_once __DIR__ . "/functions.php";
 
 //Variables del script
 //contendra los datos del formularío y para sus value
-$provider = [];
+$provider = [
+        'title'=>'',
+    'favourite'=>false,
+    'important'=>false,
+    'archived'=>false,
+];
+
 //Contendra los mensajes de error del formulario
-$errors;
+$errors=[];
 
 //Si recivo los datos desde contact_list.php por get entra y rellena $provaider
 if (isset($_GET['id'])) {
