@@ -59,6 +59,7 @@ function showTable(array $data, ?array $header = null)
             ."&favourite=" . $fila["favourite"]
             ."&important=" . $fila["important"]
             ."&archived=" . $fila["archived"]
+            ."&disabled=" . "disabled"
 
             . "' class='m-2 border-1 btn btn-secondary'>Edit/Wiew</a>";
 
@@ -66,7 +67,7 @@ function showTable(array $data, ?array $header = null)
 
         foreach ($fila as $key => $element) {
 
-            //Muestro los datos segun el encabezado permitido
+            //Muestro los datos segun el encabezado que aparece en el enunciado de la práctica
             if ($key == "id" || $key == "title" || $key == "name" || $key == "surname") {
                 echo "<td class='p-2 border-2'>$element</td>";
             }

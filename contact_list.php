@@ -5,13 +5,7 @@ $contacts = require_once __DIR__.'/data.php';
 //Importo functios
 require_once __DIR__.'/functions.php';
 
-//inicio sesión
-//session_start();
-//
-//$provider = $_SESSION['provider'];
 
-//print_r($provider)
-//
 $provider= [];
 
 //Si recivo los datos desde contact_list.php por get entra y rellena $provaider
@@ -30,10 +24,6 @@ if (isset($_GET['id'])) {
 
 }
 
-print_r($provider);
-
-
-
 //Importo cabecera
 require_once __DIR__ . "/html/head.php";
 ?>
@@ -47,7 +37,7 @@ require_once __DIR__ . "/html/head.php";
             <h1 class="mt-5 text-center">Contact list</h1>
             <div class="d-flex justify-content-center mt-3">
 <!--                botón de crear usuario-->
-                <a class="btn btn-secondary" href="contact_form.php">Create new contact</a>
+                <a class="btn btn-secondary" href="contact_form.php?disabledNew=disabled">Create new contact</a>
             </div>
 
             <div class="mt-3 d-flex justify-content-center">
