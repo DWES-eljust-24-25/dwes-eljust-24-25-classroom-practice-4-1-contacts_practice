@@ -115,12 +115,12 @@
     <!--    Buttons-->
     <div class="mt-3">
         <!--        Envia el formulario -->
-<!--        Los botones se dashabilitan segun el get enviado-->
-<!--        Este desde los botones de edit/wiew-->
+        <!--        Los botones se dashabilitan segun el get enviado-->
+        <!--        Este desde los botones de edit/wiew-->
         <input type="submit" class="btn btn-secondary"
                value="Save" <?= isset($_GET['disabled']) ? $_GET['disabled'] : ''; ?>>
 
-<!--        Estos desde el botón de create new contact-->
+        <!--        Estos desde el botón de create new contact-->
         <input type="submit" class="btn btn-secondary"
                value="Update" <?= isset($_GET['disabledNew']) ? $_GET['disabledNew'] : ''; ?>>
 

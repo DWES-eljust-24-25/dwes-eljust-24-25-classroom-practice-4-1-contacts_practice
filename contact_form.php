@@ -1,5 +1,9 @@
 <?php
 
+// Variables para los meta
+$author = "Pedro Pérez";
+$title = "contact_form";
+
 //inicio sesión
 session_start();
 

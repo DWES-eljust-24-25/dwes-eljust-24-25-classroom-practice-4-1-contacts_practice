@@ -1,5 +1,9 @@
 <?php
 
+// Variables para los meta
+$author = "Pedro Pérez";
+$title = "checkdata";
+
 //inicio sesión
 session_start();
 

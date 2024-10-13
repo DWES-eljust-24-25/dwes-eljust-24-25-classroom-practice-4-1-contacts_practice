@@ -49,17 +49,17 @@ function showTable(array $data, ?array $header = null)
 //        Etiqueta a con href preparado para pasar los datos de un contacto selecionado mediante get
         echo "<a href='contact_form.php?"
 
-            ."&id=" . $fila["id"]
-            ."&title=" . $fila["title"]
-            ."&name=" . $fila["name"]
-            ."&surname=" . $fila["surname"]
-            ."&birthdate=" . $fila["birthdate"]
-            ."&phone=" . $fila["phone"]
-            ."&email=" . $fila["email"]
-            ."&favourite=" . $fila["favourite"]
-            ."&important=" . $fila["important"]
-            ."&archived=" . $fila["archived"]
-            ."&disabled=" . "disabled"
+            . "&id=" . $fila["id"]
+            . "&title=" . $fila["title"]
+            . "&name=" . $fila["name"]
+            . "&surname=" . $fila["surname"]
+            . "&birthdate=" . $fila["birthdate"]
+            . "&phone=" . $fila["phone"]
+            . "&email=" . $fila["email"]
+            . "&favourite=" . $fila["favourite"]
+            . "&important=" . $fila["important"]
+            . "&archived=" . $fila["archived"]
+            . "&disabled=" . "disabled"
 
             . "' class='m-2 border-1 btn btn-secondary'>Edit/Wiew</a>";
 
